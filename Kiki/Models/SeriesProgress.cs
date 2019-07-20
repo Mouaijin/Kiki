@@ -16,8 +16,8 @@ namespace Kiki.Models
 
         [Required] public bool IsFinished { get; set; }
         public Guid CurrentBookProgressId { get; set; }
-        public BookProgress CurrentBookProgress { get; set; }
+        public AudioBookProgress CurrentAudioBookProgress { get; set; }
 
-        public List<BookProgress> BookProgresses { get; set; }
+        public List<AudioBookProgress> BookProgresses { get; set; }
     }
 }

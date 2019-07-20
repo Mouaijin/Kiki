@@ -14,7 +14,7 @@ namespace Kiki.Models
         public AudioFile File { get; set; }
 
         [Required] public Guid BookProgressId { get; set; }
-        public BookProgress BookProgress { get; set; }
+        public AudioBookProgress AudioBookProgress { get; set; }
 
         [Required] public bool IsFinished { get; set; }
         [Required] public DateTime Progress { get; set; }

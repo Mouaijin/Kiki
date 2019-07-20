@@ -4,20 +4,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Kiki.Models
 {
-    public class BookProgress
+    public class AudioBookProgress
     {
         public Guid Id { get; set; }
 
         [Required] public Guid UserId { get; set; }
         public KikiUser User { get; set; }
 
-        [Required] public Guid BookId { get; set; }
-        public Book Book { get; set; }
+        [Required] public Guid AudioBookId { get; set; }
+        public AudioBook AudioBook { get; set; }
 
         [Required] public bool IsFinished { get; set; }
 
-        public Guid CurrentFileProgressId { get; set; }
-        public AudioFileProgress CurrentAudioFileProgress { get; set; }
+        public int CurrentTrack { get; set; }
 
         public List<AudioFileProgress> FileProgresses { get; set; }
     }
