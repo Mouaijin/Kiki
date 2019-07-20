@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Kiki.Models {
     public class AudioBook
     {
-        public Guid AudioBookId { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public Guid BookId { get; set; }

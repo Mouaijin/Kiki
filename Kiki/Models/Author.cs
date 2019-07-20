@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Kiki.Models {
     public class Author
     {
-        public Guid AuthorId { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public string Name { get; set; }

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 namespace Kiki.Models {
     public class Book
     {
-        public Guid BookId { get; set; }
+        public Guid Id { get; set; }
 
         public string Title       { get; set; }
-        public int    Year        { get; set; }
-        public int    SeriesEntry { get; set; }
+        public Guid    Year        { get; set; }
+        public Guid    SeriesEntry { get; set; }
 
         public Guid   SeriesId { get; set; }
         public Series Series   { get; set; }
