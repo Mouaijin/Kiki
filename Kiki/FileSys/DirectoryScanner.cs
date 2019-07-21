@@ -9,18 +9,22 @@ namespace Kiki.FileSys
 {
     public class DirectoryScanner
     {
+        private const int MaxRecursionDepth = 20;
+
         public List<AudioBook> ScanForBooks(string path)
         {
             return ScanForBooks(new DirectoryInfo(path)).ToList();
         }
 
-        public IEnumerable<AudioBook> ScanForBooks(DirectoryInfo directoryInfo)
+        public IEnumerable<AudioBook> ScanForBooks(DirectoryInfo directoryInfo, int depth = 0)
         {
             ScanDirectory dir = new ScanDirectory(directoryInfo);
             yield return dir.ToAudioBook();
             foreach (DirectoryInfo childDirectory in directoryInfo.EnumerateDirectories())
             {
-                foreach (AudioBook audioBook in ScanForBooks(childDirectory))
+                if (depth == MaxRecursionDepth)
+                    yield break;
+                foreach (AudioBook audioBook in ScanForBooks(childDirectory, depth + 1))
                 {
                     yield return audioBook;
                 }
@@ -30,7 +34,7 @@ namespace Kiki.FileSys
 
     public class ScanDirectory
     {
-        public string         FullPath  { get; set; }
+        public string FullPath { get; set; }
         public List<ScanFile> ScanFiles { get; set; }
 
         public AudioBook ToAudioBook()
@@ -40,7 +44,7 @@ namespace Kiki.FileSys
 
         public ScanDirectory(DirectoryInfo directoryInfo)
         {
-            FullPath  = directoryInfo.FullName;
+            FullPath = directoryInfo.FullName;
             ScanFiles = directoryInfo.GetFiles().Select(x => new ScanFile(x)).ToList();
         }
     }
@@ -49,13 +53,13 @@ namespace Kiki.FileSys
     {
         public ScanFile(FileInfo fi)
         {
-            FullPath      = fi.FullName;
-            FileName      = fi.Name.Substring(0, fi.Name.IndexOf('.'));
+            FullPath = fi.FullName;
+            FileName = fi.Name.Substring(0, fi.Name.IndexOf('.'));
             FileExtension = fi.Extension.Substring(1);
         }
 
-        public string FullPath      { get; set; }
-        public string FileName      { get; set; }
+        public string FullPath { get; set; }
+        public string FileName { get; set; }
         public string FileExtension { get; set; }
 
         public bool IsAudioFile
@@ -68,6 +72,7 @@ namespace Kiki.FileSys
                     case "aac":
                     case "ogg":
                     case "flac":
+                    case "wav":
                         return true;
                     default: return false;
                 }

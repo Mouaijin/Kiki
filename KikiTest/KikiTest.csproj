@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+        <PackageReference Include="xunit" Version="2.4.0" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Kiki\Kiki.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="TestBooks\The A Frequency\The A Frequency 2.mp3" />
+      <Content Include="TestBooks\The A Frequency\The A Frequency 2.mp3">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="TestBooks\The A Frequency\The A Frequency 1.mp3" />
+      <Content Include="TestBooks\The A Frequency\The A Frequency 1.mp3">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="TestBooks\The Life of Noise\Brown.wav" />
+      <Content Include="TestBooks\The Life of Noise\Brown.wav">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="TestBooks\The Life of Noise\Noise1.ogg" />
+      <Content Include="TestBooks\The Life of Noise\Noise1.ogg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="TestBooks\The Life of Noise\White.flac" />
+      <Content Include="TestBooks\The Life of Noise\White.flac">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+</Project>
