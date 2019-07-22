@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Id3;
 using Kiki.Models;
 
 namespace Kiki.FileSys
@@ -19,7 +18,11 @@ namespace Kiki.FileSys
         public IEnumerable<AudioBook> ScanForBooks(DirectoryInfo directoryInfo, int depth = 0)
         {
             ScanDirectory dir = new ScanDirectory(directoryInfo);
-            yield return dir.ToAudioBook();
+            if (dir.ScanFiles.Count > 0)
+            {
+                yield return dir.ToAudioBook();
+            }
+
             foreach (DirectoryInfo childDirectory in directoryInfo.EnumerateDirectories())
             {
                 if (depth == MaxRecursionDepth)
@@ -34,7 +37,7 @@ namespace Kiki.FileSys
 
     public class ScanDirectory
     {
-        public string FullPath { get; set; }
+        public string         FullPath  { get; set; }
         public List<ScanFile> ScanFiles { get; set; }
 
         public AudioBook ToAudioBook()
@@ -44,7 +47,7 @@ namespace Kiki.FileSys
 
         public ScanDirectory(DirectoryInfo directoryInfo)
         {
-            FullPath = directoryInfo.FullName;
+            FullPath  = directoryInfo.FullName;
             ScanFiles = directoryInfo.GetFiles().Select(x => new ScanFile(x)).ToList();
         }
     }
@@ -53,13 +56,13 @@ namespace Kiki.FileSys
     {
         public ScanFile(FileInfo fi)
         {
-            FullPath = fi.FullName;
-            FileName = fi.Name.Substring(0, fi.Name.IndexOf('.'));
+            FullPath      = fi.FullName;
+            FileName      = fi.Name.Substring(0, fi.Name.IndexOf('.'));
             FileExtension = fi.Extension.Substring(1);
         }
 
-        public string FullPath { get; set; }
-        public string FileName { get; set; }
+        public string FullPath      { get; set; }
+        public string FileName      { get; set; }
         public string FileExtension { get; set; }
 
         public bool IsAudioFile
@@ -82,38 +85,38 @@ namespace Kiki.FileSys
 
         public int GetTrackNumber()
         {
-            if (FileExtension == "mp3")
+            try
             {
-                using (var mp3 = new Mp3(FullPath))
+                var tagFile = TagLib.File.Create(FullPath);
+                if (!tagFile.Tag.IsEmpty)
                 {
-                    foreach (Id3Tag tag in mp3.GetAllTags())
-                    {
-                        if (tag.Track.IsAssigned)
-                        {
-                            return tag.Track.Value;
-                        }
-                    }
+                    return (int) tagFile.Tag.Track;
                 }
             }
+            catch (Exception ex)
+            {
+                //todo: logging
+                Console.Error.WriteLine($"Error parsing audio tag: {ex.Message}; {ex.StackTrace}");
+            }
 
-            //todo: heuristic track detection, tag detection for other files
+            //todo: heuristic track detection
             return 1;
         }
 
         public string GetTrackName()
         {
-            if (FileExtension == "mp3")
+            try
             {
-                using (var mp3 = new Mp3(FullPath))
+                var tagFile = TagLib.File.Create(FullPath);
+                if (!tagFile.Tag.IsEmpty)
                 {
-                    foreach (Id3Tag tag in mp3.GetAllTags())
-                    {
-                        if (tag.Title.IsAssigned)
-                        {
-                            return tag.Title.Value;
-                        }
-                    }
+                    return tagFile.Tag.Title;
                 }
+            }
+            catch (Exception ex)
+            {
+                //todo: logging
+                Console.Error.WriteLine($"Error parsing audio tag: {ex.Message}; {ex.StackTrace}");
             }
 
             //todo: tag detection for other files

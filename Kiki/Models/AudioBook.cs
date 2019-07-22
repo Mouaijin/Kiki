@@ -34,6 +34,7 @@ namespace Kiki.Models
             {
                 Files.Add(new AudioFile(file));
             }
+            Files.Sort((file1, file2) => file1.TrackNumber.CompareTo(file2.TrackNumber));
         }
 
         public AudioBook(ScanFile file)
