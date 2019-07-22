@@ -1,7 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Kiki.Models {
+namespace Kiki.Models
+{
     public class BookAuthor
     {
         [Required]

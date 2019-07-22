@@ -20,20 +20,19 @@ namespace Kiki.Models
         public List<AudioFile> Files { get; set; }
 
         public bool IsIdentified => BookId != null;
-        public int TrackCount => Files.Count;
+        public int  TrackCount   => Files.Count;
 
-        public AudioBook()
-        {
-        }
+        public AudioBook() { }
 
         public AudioBook(ScanDirectory dir)
         {
             DirectoryPath = dir.FullPath;
-            Files = new List<AudioFile>();
+            Files         = new List<AudioFile>();
             foreach (ScanFile file in dir.ScanFiles.Where(x => x.IsAudioFile))
             {
                 Files.Add(new AudioFile(file));
             }
+
             Files.Sort((file1, file2) => file1.TrackNumber.CompareTo(file2.TrackNumber));
         }
 

@@ -8,14 +8,20 @@ namespace Kiki.Models
     {
         public Guid Id { get; set; }
 
-        [Required] public Guid UserId { get; set; }
+        [Required]
+        public Guid UserId { get; set; }
+
         public KikiUser User { get; set; }
 
-        [Required] public Guid SeriesId { get; set; }
+        [Required]
+        public Guid SeriesId { get; set; }
+
         public Series Series { get; set; }
 
-        [Required] public bool IsFinished { get; set; }
-        public Guid CurrentBookProgressId { get; set; }
+        [Required]
+        public bool IsFinished { get; set; }
+
+        public Guid              CurrentBookProgressId    { get; set; }
         public AudioBookProgress CurrentAudioBookProgress { get; set; }
 
         public List<AudioBookProgress> BookProgresses { get; set; }

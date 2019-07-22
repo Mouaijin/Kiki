@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace Kiki.Models {
+namespace Kiki.Models
+{
     public class Series
     {
         public Guid Id { get; set; }

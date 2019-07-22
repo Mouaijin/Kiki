@@ -33,19 +33,19 @@ namespace Kiki
             var connection = "Data Source=kiki.db";
             services.AddDbContext<KikiContext>(options => options.UseSqlite(connection));
             services.AddIdentity<KikiUser, KikiRole>(i =>
-                {
-                    //warning: placeholder development settings, change to something sane later
-                    i.User.RequireUniqueEmail = true;
-                    i.Password.RequireDigit = false;
-                    i.Password.RequiredLength = 1;
-                    i.Password.RequireLowercase = false;
-                    i.Password.RequireUppercase = false;
-                    i.Password.RequiredUniqueChars = 1;
-                })
-                .AddEntityFrameworkStores<KikiContext>()
-                .AddDefaultTokenProviders()
-                .AddUserStore<UserStore<KikiUser, KikiRole, KikiContext, Guid>>()
-                .AddRoleStore<RoleStore<KikiRole, KikiContext, Guid>>();
+                                                     {
+                                                         //warning: placeholder development settings, change to something sane later
+                                                         i.User.RequireUniqueEmail      = true;
+                                                         i.Password.RequireDigit        = false;
+                                                         i.Password.RequiredLength      = 1;
+                                                         i.Password.RequireLowercase    = false;
+                                                         i.Password.RequireUppercase    = false;
+                                                         i.Password.RequiredUniqueChars = 1;
+                                                     })
+                    .AddEntityFrameworkStores<KikiContext>()
+                    .AddDefaultTokenProviders()
+                    .AddUserStore<UserStore<KikiUser, KikiRole, KikiContext, Guid>>()
+                    .AddRoleStore<RoleStore<KikiRole, KikiContext, Guid>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
