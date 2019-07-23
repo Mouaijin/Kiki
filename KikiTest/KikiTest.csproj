@@ -37,6 +37,10 @@
       <Content Include="TestBooks\The Life of Noise\White.flac">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="Properties\BooksApiKey.txt" />
+      <Content Include="Properties\BooksApiKey.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>

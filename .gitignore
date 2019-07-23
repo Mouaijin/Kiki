@@ -330,3 +330,5 @@ ASALocalRun/
 .mfractor/
 
 Kiki/Properties/BooksApiKey\.txt
+
+KikiTest/Properties/BooksApiKey\.txt
