@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Kiki.FileSys;
 using Kiki.Models;
+using Kiki.Models.Data;
 using Xunit;
 
 namespace KikiTest

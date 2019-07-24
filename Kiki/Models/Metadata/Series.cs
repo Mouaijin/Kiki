@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Kiki.Models
+namespace Kiki.Models.Metadata
 {
     public class Series
     {

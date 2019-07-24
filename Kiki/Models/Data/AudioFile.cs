@@ -1,8 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using Kiki.FileSys;
+using Kiki.Models.Scanning;
 
-namespace Kiki.Models
+namespace Kiki.Models.Data
 {
     public class AudioFile
     {

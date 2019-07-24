@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Kiki.FileSys
+namespace Kiki.Models.Scanning
 {
     public class ScanFile
     {

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Kiki.FileSys;
+using Kiki.Models.Metadata;
+using Kiki.Models.Scanning;
 
-namespace Kiki.Models
+namespace Kiki.Models.Data
 {
     public class AudioBook
     {

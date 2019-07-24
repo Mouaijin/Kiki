@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Kiki.Models;
+using Kiki.Models.Data;
+using Kiki.Models.Scanning;
 
 namespace Kiki.FileSys
 {

@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Kiki.Models.Identity;
+using Kiki.Models.Metadata;
 
-namespace Kiki.Models
+namespace Kiki.Models.Data
 {
     public class SeriesProgress
     {

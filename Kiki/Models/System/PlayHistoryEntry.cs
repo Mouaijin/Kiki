@@ -1,7 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Kiki.Models.Data;
+using Kiki.Models.Identity;
 
-namespace Kiki.Models
+namespace Kiki.Models.System
 {
     public class PlayHistoryEntry
     {

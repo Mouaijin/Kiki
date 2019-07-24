@@ -1,7 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Kiki.Models.Identity;
 
-namespace Kiki.Models
+namespace Kiki.Models.Data
 {
     public class AudioFileProgress
     {

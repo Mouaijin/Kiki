@@ -1,6 +1,6 @@
 using System;
 
-namespace Kiki.Models
+namespace Kiki.Models.System
 {
     public class DebugLogEntry
     {

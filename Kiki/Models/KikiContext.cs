@@ -1,4 +1,8 @@
 using System;
+using Kiki.Models.Data;
+using Kiki.Models.Identity;
+using Kiki.Models.Metadata;
+using Kiki.Models.System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

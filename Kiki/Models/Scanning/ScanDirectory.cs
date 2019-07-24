@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Kiki.Models;
+using Kiki.Models.Data;
 
-namespace Kiki.FileSys
+namespace Kiki.Models.Scanning
 {
     public class ScanDirectory
     {

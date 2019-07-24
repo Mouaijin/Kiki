@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Kiki.Models
+namespace Kiki.Models.Metadata
 {
     public class Author
     {
