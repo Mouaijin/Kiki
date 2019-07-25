@@ -7,7 +7,14 @@ namespace Kiki.Models.Scanning
 {
     public class ScanDirectory
     {
-        public string         FullPath  { get; set; }
+        /// <summary>
+        /// Full path of directory
+        /// </summary>
+        public string FullPath { get; set; }
+
+        /// <summary>
+        /// List of scanned audio files in directory
+        /// </summary>
         public List<ScanFile> ScanFiles { get; set; }
 
         public AudioBook ToAudioBook()
@@ -17,7 +24,7 @@ namespace Kiki.Models.Scanning
 
         public ScanDirectory(DirectoryInfo directoryInfo)
         {
-            FullPath  = directoryInfo.FullName;
+            FullPath = directoryInfo.FullName;
             ScanFiles = directoryInfo.GetFiles().Select(x => new ScanFile(x)).ToList();
         }
     }

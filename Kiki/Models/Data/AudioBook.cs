@@ -15,19 +15,21 @@ namespace Kiki.Models.Data
 
         public Book Book { get; set; }
 
-        public string DirectoryPath { get; set; }
+        public string AudioBookDirectoryPath { get; set; }
 
         public List<AudioFile> Files { get; set; }
 
         public bool IsIdentified => BookId != null;
         public int  TrackCount   => Files.Count;
 
-        public AudioBook() { }
+        public AudioBook()
+        {
+        }
 
         public AudioBook(ScanDirectory dir)
         {
-            DirectoryPath = dir.FullPath;
-            Files         = new List<AudioFile>();
+            AudioBookDirectoryPath = dir.FullPath;
+            Files = new List<AudioFile>();
             foreach (ScanFile file in dir.ScanFiles.Where(x => x.IsAudioFile))
             {
                 Files.Add(new AudioFile(file));
@@ -40,7 +42,7 @@ namespace Kiki.Models.Data
         {
             Files = new List<AudioFile>();
             Files.Add(new AudioFile(file));
-            DirectoryPath = file.FullPath;
+            AudioBookDirectoryPath = file.FullPath;
         }
     }
 }

@@ -7,14 +7,29 @@ namespace Kiki.Models.Scanning
     {
         public ScanFile(FileInfo fi)
         {
-            FullPath      = fi.FullName;
-            FileName      = fi.Name.Substring(0, fi.Name.IndexOf('.'));
+            FullPath = fi.FullName;
+            FileName = fi.Name.Substring(0, fi.Name.IndexOf('.'));
             FileExtension = fi.Extension.Substring(1);
+            ParentDirectory = fi.DirectoryName;
         }
 
-        public string FullPath      { get; set; }
-        public string FileName      { get; set; }
+        ///Full path of file
+        public string FullPath { get; set; }
+
+        /// <summary>
+        /// Name of file, without extension
+        /// </summary>
+        public string FileName { get; set; }
+
+        /// <summary>
+        /// File extension, no leading period
+        /// </summary>
         public string FileExtension { get; set; }
+
+        /// <summary>
+        /// Full path of parent directory
+        /// </summary>
+        public string ParentDirectory { get; set; }
 
         public bool IsAudioFile
         {
@@ -33,6 +48,11 @@ namespace Kiki.Models.Scanning
             }
         }
 
+        /// <summary>
+        /// Attempts to extract track information from media tags
+        /// todo: Heuristic fallback is planned
+        /// </summary>
+        /// <returns>1-based index of the track in the audiobook/album</returns>
         public int GetTrackNumber()
         {
             try
@@ -53,6 +73,10 @@ namespace Kiki.Models.Scanning
             return 1;
         }
 
+        /// <summary>
+        /// Attempts to extract track name from media tags, falling back on filename where impossible
+        /// </summary>
+        /// <returns>Name of track</returns>
         public string GetTrackName()
         {
             try
