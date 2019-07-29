@@ -7,7 +7,7 @@ namespace Kiki.Models.Metadata
     public class Author
     {
         public Guid Id { get; set; }
-
+ 
         [Required]
         public string Name { get; set; }
 
