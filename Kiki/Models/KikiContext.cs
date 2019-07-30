@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kiki.Models
 {
-    public partial class KikiContext : IdentityDbContext<KikiUser, KikiRole, Guid>
+    public class KikiContext : IdentityDbContext<KikiUser, KikiRole, Guid>
     {
         public KikiContext(DbContextOptions<KikiContext> options) : base(options)
         {

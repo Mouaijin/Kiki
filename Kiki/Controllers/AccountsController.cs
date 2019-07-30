@@ -14,8 +14,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Kiki.Controllers
 {
-    [Route("[controller]/[action]")]
-    public class AccountsController : Controller
+    [Route("api/[controller]/[action]")]
+    public class AccountsController : ControllerBase
     {
         private readonly SignInManager<KikiUser> _signInManager;
         private readonly UserManager<KikiUser> _userManager;
