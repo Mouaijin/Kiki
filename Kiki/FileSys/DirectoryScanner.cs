@@ -34,11 +34,30 @@ namespace Kiki.FileSys
             ScanDirectory dir = new ScanDirectory(directoryInfo);
             if (dir.ScanFiles.Count > 0)
             {
-                yield return dir.ToAudioBook();
+                //Attempt to group directory's files into albums
+                IEnumerable<IGrouping<string, ScanFile>> albumGroups = dir.ScanFiles.GroupBy(x => x.GetAlbumName());
+                foreach (var albumGroup in albumGroups)
+                {
+                    //Assume that groups of files with the same album are an audiobook
+                    if (albumGroup.Count() > 1)
+                    {
+                        //remove from pool of files remaining in directory
+                        dir.ScanFiles.RemoveAll(x => albumGroup.Contains(x));
+                        yield return new AudioBook(new ScanDirectory(dir.FullPath, albumGroup.ToList()));
+                    }
+                }
+
+                //only return remaining files as audiobook if the album grouping method missed some
+                if (dir.ScanFiles.Count > 0)
+                {
+                    yield return dir.ToAudioBook();
+                }
             }
 
+            //recurse into child directories
             foreach (DirectoryInfo childDirectory in directoryInfo.EnumerateDirectories())
             {
+                //break at specified depth to prevent infinite loops and such
                 if (depth == MaxRecursionDepth)
                     yield break;
                 foreach (AudioBook audioBook in ScanForBooks(childDirectory, depth + 1))

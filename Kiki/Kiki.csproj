@@ -17,8 +17,4 @@
         <PackageReference Include="TagLibSharp" Version="2.2.0-beta" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Services" />
-    </ItemGroup>
-
 </Project>

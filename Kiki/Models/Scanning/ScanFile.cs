@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using File = TagLib.File;
 
 namespace Kiki.Models.Scanning
 {
@@ -96,5 +97,40 @@ namespace Kiki.Models.Scanning
             //todo: tag detection for other files
             return FileName;
         }
+
+        public string GetAlbumName()
+        {
+            try
+            {
+                var tagFile = TagLib.File.Create(FullPath);
+                if (!tagFile.Tag.IsEmpty)
+                {
+                    return tagFile.Tag.Album;
+                }
+            }
+            catch (Exception ex)
+            {
+                //todo: logging
+                Console.Error.WriteLine($"Error parsing audio tag: {ex.Message}; {ex.StackTrace}");
+            }
+
+            //todo: tag detection for other files
+            return FileName;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is ScanFile file)
+            {
+                return file.FullPath == FullPath;
+            }
+
+            return false;
+        }
+
+        // public void GetAllMetaDataTags(File file)
+        // {
+        //      file.Properties.
+        // }
     }
 }

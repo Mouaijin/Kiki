@@ -27,5 +27,11 @@ namespace Kiki.Models.Scanning
             FullPath = directoryInfo.FullName;
             ScanFiles = directoryInfo.GetFiles().Select(x => new ScanFile(x)).ToList();
         }
+
+        public ScanDirectory(string fullPath, List<ScanFile> scanFiles)
+        {
+            FullPath = fullPath;
+            ScanFiles = scanFiles;
+        }
     }
 }

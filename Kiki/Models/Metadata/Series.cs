@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kiki.Models.Data;
 
 namespace Kiki.Models.Metadata
 {
@@ -15,6 +16,6 @@ namespace Kiki.Models.Metadata
         /// <summary>
         /// List of books in series
         /// </summary>
-        public List<Book> Books { get; set; }
+        public List<AudioBook> Books { get; set; }
     }
 }

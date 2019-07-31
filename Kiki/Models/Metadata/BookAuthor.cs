@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Kiki.Models.Data;
 
 namespace Kiki.Models.Metadata
 {
@@ -11,7 +12,7 @@ namespace Kiki.Models.Metadata
         [Required]
         public Guid BookId { get; set; }
 
-        public Book Book { get; set; }
+        public AudioBook Book { get; set; }
 
         [Required]
         public Guid AuthorId { get; set; }
