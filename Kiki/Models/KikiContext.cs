@@ -22,11 +22,27 @@ namespace Kiki.Models
             modelBuilder.Entity<BookAuthor>().HasKey(a => new {a.AuthorId, a.BookId});
             modelBuilder.Entity<SeriesAuthor>().HasKey(a => new {a.AuthorId, a.SeriesId});
             modelBuilder.Entity<AudioFile>().HasKey(a => new {a.AudioBookId, a.TrackNumber});
+            modelBuilder.Entity<AudioTags>()
+                        .Property(e => e.AlbumArtists)
+                        .HasConversion(
+                                       v => string.Join(',', v),
+                                       v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+            modelBuilder.Entity<AudioTags>()
+                        .Property(e => e.Genres)
+                        .HasConversion(
+                                       v => string.Join(',', v),
+                                       v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+            modelBuilder.Entity<AudioTags>()
+                        .Property(e => e.Performers)
+                        .HasConversion(
+                                       v => string.Join(',', v),
+                                       v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
         }
 
 
         public DbSet<AudioBook>         AudioBooks       { get; set; }
         public DbSet<AudioFile>         AudioFiles       { get; set; }
+        public DbSet<AudioTags>         AudioFileTags    { get; set; }
         public DbSet<AudioBookProgress> BookProgresses   { get; set; }
         public DbSet<Author>            Authors          { get; set; }
         public DbSet<BookAuthor>        BookAuthors      { get; set; }

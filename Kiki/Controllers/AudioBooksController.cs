@@ -31,10 +31,23 @@ namespace Kiki.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<AudioBook> Get([FromQuery] Guid id)
+        public async Task<ActionResult<AudioBook>> Get([FromQuery] Guid id)
         {
             AudioBook audioBook = await _context.AudioBooks.SingleOrDefaultAsync(x => x.Id == id);
             return audioBook;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<List<AudioFile>>> Files([FromQuery] Guid id)
+        {
+            AudioBook audioBook = await _context.AudioBooks.SingleOrDefaultAsync(x => x.Id == id);
+            if (audioBook == null)
+            {
+                return NotFound();
+            }
+
+            return audioBook.Files;
         }
 
         [Authorize]
@@ -43,6 +56,34 @@ namespace Kiki.Controllers
         {
             AudioBookProgress progress =
                 await _context.BookProgresses.SingleOrDefaultAsync(x => x.Id == id && x.UserId == User.GetUserId());
+            return progress;
+        }
+    }
+
+    [ApiController]
+    [Route("api/[controller]/[action]")]
+    public class AudioFileController : ControllerBase
+    {
+        private readonly KikiContext _context;
+
+        public AudioFileController(KikiContext dbContext)
+        {
+            _context = dbContext;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<AudioFile> Get([FromQuery] Guid id)
+        {
+            AudioFile file = await _context.AudioFiles.SingleOrDefaultAsync(x => x.Id == id);
+            return file;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<AudioFileProgress> Progress([FromQuery] Guid id)
+        {
+            AudioFileProgress progress = await _context.FileProgresses.SingleOrDefaultAsync(x => x.Id == id && x.UserId == User.GetUserId());
             return progress;
         }
     }
