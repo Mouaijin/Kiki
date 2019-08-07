@@ -1,16 +1,20 @@
 using System;
 using System.IO;
+using Kiki.Models.Data;
 using File = TagLib.File;
 
 namespace Kiki.Models.Scanning
 {
     public class ScanFile
     {
+        private AudioTags _tags;
+        private bool      _scannedTags = false;
+
         public ScanFile(FileInfo fi)
         {
-            FullPath = fi.FullName;
-            FileName = fi.Name.Substring(0, fi.Name.IndexOf('.'));
-            FileExtension = fi.Extension.Substring(1);
+            FullPath        = fi.FullName;
+            FileName        = fi.Name.Substring(0, fi.Name.IndexOf('.'));
+            FileExtension   = fi.Extension.Substring(1);
             ParentDirectory = fi.DirectoryName;
         }
 
@@ -44,78 +48,42 @@ namespace Kiki.Models.Scanning
                     case "flac":
                     case "wav":
                         return true;
+
                     default: return false;
                 }
             }
         }
 
-        /// <summary>
-        /// Attempts to extract track information from media tags
-        /// todo: Heuristic fallback is planned
-        /// </summary>
-        /// <returns>1-based index of the track in the audiobook/album</returns>
-        public int GetTrackNumber()
+        public AudioTags Tags
         {
-            try
+            get
             {
-                var tagFile = TagLib.File.Create(FullPath);
-                if (!tagFile.Tag.IsEmpty)
+                if (!_scannedTags)
                 {
-                    return (int) tagFile.Tag.Track;
+                    try
+                    {
+                        var tagFile = TagLib.File.Create(FullPath);
+                        if (!tagFile.Tag.IsEmpty)
+                        {
+                            _tags = new AudioTags(tagFile.Tag);
+                        }
+                        else
+                        {
+                            _tags = null;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //todo: logging
+                        Console.Error.WriteLine($"Error parsing audio tag: {ex.Message}; {ex.StackTrace}");
+                        _tags = null;
+                    }
+
+                    _scannedTags = true;
                 }
-            }
-            catch (Exception ex)
-            {
-                //todo: logging
-                Console.Error.WriteLine($"Error parsing audio tag: {ex.Message}; {ex.StackTrace}");
-            }
 
-            //todo: heuristic track detection
-            return 1;
-        }
-
-        /// <summary>
-        /// Attempts to extract track name from media tags, falling back on filename where impossible
-        /// </summary>
-        /// <returns>Name of track</returns>
-        public string GetTrackName()
-        {
-            try
-            {
-                var tagFile = TagLib.File.Create(FullPath);
-                if (!tagFile.Tag.IsEmpty)
-                {
-                    return tagFile.Tag.Title;
-                }
+                return _tags;
             }
-            catch (Exception ex)
-            {
-                //todo: logging
-                Console.Error.WriteLine($"Error parsing audio tag: {ex.Message}; {ex.StackTrace}");
-            }
-
-            //todo: tag detection for other files
-            return FileName;
-        }
-
-        public string GetAlbumName()
-        {
-            try
-            {
-                var tagFile = TagLib.File.Create(FullPath);
-                if (!tagFile.Tag.IsEmpty)
-                {
-                    return tagFile.Tag.Album;
-                }
-            }
-            catch (Exception ex)
-            {
-                //todo: logging
-                Console.Error.WriteLine($"Error parsing audio tag: {ex.Message}; {ex.StackTrace}");
-            }
-
-            //todo: tag detection for other files
-            return FileName;
         }
 
         public override bool Equals(object obj)
@@ -127,10 +95,5 @@ namespace Kiki.Models.Scanning
 
             return false;
         }
-
-        // public void GetAllMetaDataTags(File file)
-        // {
-        //      file.Properties.
-        // }
     }
 }

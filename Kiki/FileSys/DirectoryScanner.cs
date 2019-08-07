@@ -35,7 +35,7 @@ namespace Kiki.FileSys
             if (dir.ScanFiles.Count > 0)
             {
                 //Attempt to group directory's files into albums
-                IEnumerable<IGrouping<string, ScanFile>> albumGroups = dir.ScanFiles.GroupBy(x => x.GetAlbumName());
+                IEnumerable<IGrouping<string, ScanFile>> albumGroups = dir.ScanFiles.GroupBy(x => x.Tags.AlbumName);
                 foreach (var albumGroup in albumGroups)
                 {
                     //Assume that groups of files with the same album are an audiobook

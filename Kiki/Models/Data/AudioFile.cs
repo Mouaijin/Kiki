@@ -14,6 +14,9 @@ namespace Kiki.Models.Data
 
         public AudioBook AudioBook { get; set; }
 
+        public Guid? AudioTagsId { get; set; }
+        public AudioTags AudioTags { get; set; }
+
 
         [Required]
         public int TrackNumber { get; set; }
@@ -37,8 +40,9 @@ namespace Kiki.Models.Data
             Path          = file.FullPath;
             FileName      = file.FileName;
             FileExtension = file.FileExtension;
-            Name          = file.GetTrackName();
-            TrackNumber   = file.GetTrackNumber();
+            Name = file.Tags?.Title ?? file.FileName;
+            TrackNumber   = file.Tags?.Track ?? 1;
+            AudioTags = file.Tags;
         }
     }
 }

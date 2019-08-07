@@ -14,12 +14,13 @@ namespace Kiki.Models.Data
         public string   Description  { get; set; }
         public string[] AlbumArtists { get; set; }
         public string[] Genres       { get; set; }
-        public uint?    Year         { get; set; }
+        public int?    Year         { get; set; }
         public string   Subtitle     { get; set; }
         public string   Grouping     { get; set; }
-        public uint?    Track        { get; set; }
+        public int?    Track        { get; set; }
         public uint?    DiscCount    { get; set; }
         public string[] Performers   { get; set; }
+        public string   AlbumName    { get; set; }
 
         public AudioTags()
         {
@@ -34,12 +35,13 @@ namespace Kiki.Models.Data
             AlbumArtists = tag?.AlbumArtists;
             Genres       = tag?.Genres;
             Title        = tag?.Title;
-            Year         = tag?.Year;
+            Year         = (int?) tag?.Year;
             Subtitle     = tag?.Subtitle;
             Grouping     = tag?.Grouping;
-            Track        = tag?.Track;
+            Track        = (int?) tag?.Track;
             DiscCount    = tag?.DiscCount;
             Performers   = tag?.Performers;
+            AlbumName    = tag?.Album;
         }
     }
 }

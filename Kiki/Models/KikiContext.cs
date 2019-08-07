@@ -2,6 +2,7 @@ using System;
 using Kiki.Models.Data;
 using Kiki.Models.Identity;
 using Kiki.Models.Metadata;
+using Kiki.Models.Scanning;
 using Kiki.Models.System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -27,11 +28,13 @@ namespace Kiki.Models
                         .HasConversion(
                                        v => string.Join(',', v),
                                        v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+
             modelBuilder.Entity<AudioTags>()
                         .Property(e => e.Genres)
                         .HasConversion(
                                        v => string.Join(',', v),
                                        v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+
             modelBuilder.Entity<AudioTags>()
                         .Property(e => e.Performers)
                         .HasConversion(
@@ -48,6 +51,7 @@ namespace Kiki.Models
         public DbSet<BookAuthor>        BookAuthors      { get; set; }
         public DbSet<DebugLogEntry>     DebugLog         { get; set; }
         public DbSet<AudioFileProgress> FileProgresses   { get; set; }
+        public DbSet<MediaDirectory>    MediaDirectories { get; set; }
         public DbSet<PlayHistoryEntry>  PlayHistory      { get; set; }
         public DbSet<Series>            Series           { get; set; }
         public DbSet<SeriesAuthor>      SeriesAuthors    { get; set; }
