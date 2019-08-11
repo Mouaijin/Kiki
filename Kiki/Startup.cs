@@ -36,7 +36,8 @@ namespace Kiki
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             var connection = "Data Source=kiki.db";
-            services.AddDbContext<KikiContext>(options => options.UseSqlite(connection));
+            
+            services.AddDbContext<KikiContext>(options => options.UseLoggerFactory(GetLoggerFactory()).UseSqlite(connection));
             services.AddIdentity<KikiUser, KikiRole>(i =>
                                                      {
                                                          //warning: placeholder development settings, change to something sane later
@@ -72,6 +73,17 @@ namespace Kiki
                                                                      ClockSkew = TimeSpan.Zero // remove delay of token when expire
                                                                  };
                              });
+        }
+        private ILoggerFactory GetLoggerFactory()
+        {
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging(builder =>
+                                             builder.AddFile("~/.config/kiki/logs/kiki-log-{Date}.txt"));
+//                                             builder.AddConsole()
+//                                                    .AddFilter(DbLoggerCategory.Database.Command.Name, 
+//                                                               LogLevel.Information)); 
+            return serviceCollection.BuildServiceProvider()
+                                    .GetService<ILoggerFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

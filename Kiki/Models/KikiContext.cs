@@ -49,7 +49,6 @@ namespace Kiki.Models
         public DbSet<AudioBookProgress> BookProgresses   { get; set; }
         public DbSet<Author>            Authors          { get; set; }
         public DbSet<BookAuthor>        BookAuthors      { get; set; }
-        public DbSet<DebugLogEntry>     DebugLog         { get; set; }
         public DbSet<AudioFileProgress> FileProgresses   { get; set; }
         public DbSet<MediaDirectory>    MediaDirectories { get; set; }
         public DbSet<PlayHistoryEntry>  PlayHistory      { get; set; }

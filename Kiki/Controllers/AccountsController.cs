@@ -18,8 +18,8 @@ namespace Kiki.Controllers
     public class AccountsController : ControllerBase
     {
         private readonly SignInManager<KikiUser> _signInManager;
-        private readonly UserManager<KikiUser> _userManager;
-        private readonly IConfiguration _configuration;
+        private readonly UserManager<KikiUser>   _userManager;
+        private readonly IConfiguration          _configuration;
 
         public AccountsController(
             UserManager<KikiUser>   userManager,
@@ -27,7 +27,7 @@ namespace Kiki.Controllers
             IConfiguration          configuration
         )
         {
-            _userManager = userManager;
+            _userManager   = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
         }
@@ -52,7 +52,7 @@ namespace Kiki.Controllers
             var user = new KikiUser
                        {
                            UserName = model.Email,
-                           Email = model.Email
+                           Email    = model.Email
                        };
             var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -74,8 +74,8 @@ namespace Kiki.Controllers
                              new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
                          };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var key     = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
+            var creds   = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["JwtExpireDays"]));
 
             var token = new JwtSecurityToken(
