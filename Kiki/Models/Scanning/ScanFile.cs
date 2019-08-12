@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Kiki.Models.Data;
+using TagLib;
 using File = TagLib.File;
 
 namespace Kiki.Models.Scanning
@@ -9,6 +10,7 @@ namespace Kiki.Models.Scanning
     {
         private AudioTags _tags;
         private bool      _scannedTags = false;
+        private bool      _isAudio     = false;
 
         public ScanFile(FileInfo fi)
         {
@@ -40,17 +42,12 @@ namespace Kiki.Models.Scanning
         {
             get
             {
-                switch (FileExtension)
+                if (!_scannedTags)
                 {
-                    case "mp3":
-                    case "aac":
-                    case "ogg":
-                    case "flac":
-                    case "wav":
-                        return true;
-
-                    default: return false;
+                    ScanTags();
                 }
+
+                return _isAudio;
             }
         }
 
@@ -60,30 +57,40 @@ namespace Kiki.Models.Scanning
             {
                 if (!_scannedTags)
                 {
-                    try
-                    {
-                        var tagFile = TagLib.File.Create(FullPath);
-                        if (!tagFile.Tag.IsEmpty)
-                        {
-                            _tags = new AudioTags(tagFile.Tag);
-                        }
-                        else
-                        {
-                            _tags = null;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        //todo: logging
-                        Console.Error.WriteLine($"Error parsing audio tag: {ex.Message}; {ex.StackTrace}");
-                        _tags = null;
-                    }
-
-                    _scannedTags = true;
+                    ScanTags();
                 }
 
                 return _tags;
             }
+        }
+
+        private void ScanTags()
+        {
+            try
+            {
+                var tagFile = TagLib.File.Create(FullPath);
+                if (!tagFile.Tag.IsEmpty)
+                {
+                    _isAudio = tagFile.Properties.MediaTypes == MediaTypes.Audio;
+                    _tags    = new AudioTags(tagFile.Tag);
+                }
+                else
+                {
+                    _tags = null;
+                }
+            }
+            catch (UnsupportedFormatException ex)
+            {
+                _tags = null;
+            }
+            catch (Exception ex)
+            {
+                //todo: logging
+                Console.Error.WriteLine($"Error parsing audio tag: {ex.Message}; {ex.StackTrace}");
+                _tags = null;
+            }
+
+            _scannedTags = true;
         }
 
         public override bool Equals(object obj)

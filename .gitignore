@@ -332,3 +332,7 @@ ASALocalRun/
 Kiki/Properties/BooksApiKey\.txt
 
 KikiTest/Properties/BooksApiKey\.txt
+
+Kiki/Models/System/SystemServiceCredentialsDev\.cs
+
+KikiExploration/
