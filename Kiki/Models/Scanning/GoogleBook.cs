@@ -14,8 +14,9 @@ namespace Kiki.Models.Scanning
         public string       ThumbnailLink { get; set; }
         public string       Language      { get; set; }
         public string       Publisher     { get; set; }
-        public DateTime?       Published     { get; set; }
+        public DateTime?    Published     { get; set; }
         public string       Category      { get; set; }
+        public string       GoogleBooksID { get; set; }
 
 
         public List<IndustryIdentifier> IndustryIdentifiers { get; set; }

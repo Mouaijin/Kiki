@@ -13,5 +13,15 @@ namespace Kiki.Models.Metadata
 
         public List<SeriesAuthor> Series { get; set; }
         public List<BookAuthor>   Books  { get; set; }
+
+        public Author()
+        {
+            
+        }
+
+        public Author(string name)
+        {
+            Name = name;
+        }
     }
 }

@@ -18,5 +18,15 @@ namespace Kiki.Models.Metadata
         public Guid AuthorId { get; set; }
 
         public Author Author { get; set; }
+
+        public BookAuthor()
+        {
+            
+        }
+        public BookAuthor(AudioBook book, Author author)
+        {
+            Book = book;
+            Author = author;
+        }
     }
 }

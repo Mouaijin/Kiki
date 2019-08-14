@@ -12,7 +12,7 @@ namespace KikiTest
         public void SearchByISBN()
         {
             BookInfoScanner scanner = new BookInfoScanner();
-            List<GoogleBook> tradingInDangerResults = scanner.SearchBookByISBN("0-345-44760-3");
+            List<GoogleBook> tradingInDangerResults = scanner.SearchBookByISBNAsync("0-345-44760-3").Result;
             Assert.Single(tradingInDangerResults);
             // Assert.Equal("Trading in Danger", tradingInDangerResults[0].VolumeInfo.Title);
         }

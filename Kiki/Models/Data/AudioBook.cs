@@ -86,6 +86,16 @@ namespace Kiki.Models.Data
         public List<BookAuthor> Authors { get; set; }
 
         /// <summary>
+        /// Description of the book
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Google Books API ID for this book, if identified
+        /// </summary>
+        public string GoogleBooksID { get; set; }
+
+        /// <summary>
         /// True if book has a non-null SeriesId
         /// </summary>
         public bool IsPartOfSeries => SeriesId != null;
@@ -112,5 +122,6 @@ namespace Kiki.Models.Data
             Files.Add(new AudioFile(file));
             AudioBookDirectoryPath = file.FullPath;
         }
+        
     }
 }

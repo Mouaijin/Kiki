@@ -11,9 +11,7 @@ namespace Kiki.Models
 {
     public class KikiContext : IdentityDbContext<KikiUser, KikiRole, Guid>
     {
-        public KikiContext(DbContextOptions<KikiContext> options) : base(options)
-        {
-        }
+        public KikiContext(DbContextOptions<KikiContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,6 +50,7 @@ namespace Kiki.Models
         public DbSet<AudioFileProgress> FileProgresses   { get; set; }
         public DbSet<MediaDirectory>    MediaDirectories { get; set; }
         public DbSet<PlayHistoryEntry>  PlayHistory      { get; set; }
+        public DbSet<Publisher>         Publishers       { get; set; }
         public DbSet<Series>            Series           { get; set; }
         public DbSet<SeriesAuthor>      SeriesAuthors    { get; set; }
         public DbSet<SeriesProgress>    SeriesProgresses { get; set; }

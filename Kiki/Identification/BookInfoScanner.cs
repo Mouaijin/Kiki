@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Google.Apis.Books.v1;
 using Google.Apis.Books.v1.Data;
 using Google.Apis.Services;
@@ -41,20 +42,18 @@ namespace Kiki.Identification
                                              });
         }
 
-        public List<GoogleBook> SearchAudiobook(AudioBook audioBook)
+        public async Task<List<GoogleBook>> SearchAudiobookAsync(AudioBook audioBook)
         {
-            List<GoogleBook> firstPass = InitialScan();
+            List<GoogleBook> firstPass = await InitialScan();
 
             List<GoogleBook> badCandidates = new List<GoogleBook>();
             //remove low-confidence matches
             foreach (GoogleBook googleBook in firstPass)
             {
                 string lcs = googleBook.Title.LCS(audioBook.Files.First().Name);
-                if (!audioBook.Files.First().Name.Contains(lcs, StringComparison.InvariantCultureIgnoreCase) &&
-                    !audioBook.Files.First().AudioTags.AlbumName
-                              .Contains(lcs, StringComparison.InvariantCultureIgnoreCase) &&
-                    ( (float) lcs.Length / audioBook.Files.First().Name.Length < 0.6f ||
-                      (float) lcs.Length / audioBook.Files.First().AudioTags.AlbumName.Length < 0.6f ))
+                if (
+                    (float) lcs.Length / audioBook.Files.First().Name.Length < 0.5f ||
+                    (float) lcs.Length / audioBook.Files.First().AudioTags.AlbumName.Length < 0.5f)
                 {
                     badCandidates.Add(googleBook);
                 }
@@ -75,7 +74,7 @@ namespace Kiki.Identification
 
             return firstPass;
 
-            List<GoogleBook> InitialScan()
+            async Task<List<GoogleBook>> InitialScan()
             {
                 //todo: split into individual file results and consolidate
                 //reference first file for now
@@ -90,7 +89,7 @@ namespace Kiki.Identification
                     if (!string.IsNullOrEmpty(file.AudioTags.AlbumName))
                     {
                         Console.WriteLine($"Using album search {file.AudioTags.AlbumName}");
-                        List<GoogleBook> albumResults = SearchByTitle(file.AudioTags.AlbumName.Trim());
+                        List<GoogleBook> albumResults = await SearchGeneralAsync(file.AudioTags.AlbumName.Trim());
                         if (albumResults.Count == 0)
                         {
                             Console.WriteLine("Splitting album name");
@@ -99,7 +98,7 @@ namespace Kiki.Identification
                             {
                                 foreach (string s in split)
                                 {
-                                    albumResults = SearchByTitle(s.Trim());
+                                    albumResults = await SearchGeneralAsync(s.Trim());
                                     if (albumResults != null && albumResults.Count > 0)
                                     {
                                         break;
@@ -115,33 +114,38 @@ namespace Kiki.Identification
                     if (!string.IsNullOrEmpty(file.AudioTags.Title))
                     {
                         Console.WriteLine("Using title");
-                        List<GoogleBook> titleResults = SearchByTitle(file.AudioTags.Title);
+                        List<GoogleBook> titleResults = await SearchGeneralAsync(file.AudioTags.Title);
                         if (titleResults != null && titleResults.Count > 0)
                             return titleResults;
                     }
                 }
 
                 Console.WriteLine("Using filename search");
-                List<GoogleBook> filenameResults = SearchByTitle(file.FileName);
+                List<GoogleBook> filenameResults = await SearchGeneralAsync(file.FileName);
                 return filenameResults;
             }
         }
 
 
-        public List<GoogleBook> SearchBookByISBN(string isbn)
+        public async Task<List<GoogleBook>> SearchBookByISBNAsync(string isbn)
         {
-            return SearchBooksBase($"isbn:{isbn.Remove("-")}");
+            return await SearchBooksAsync($"isbn:{isbn.Remove("-")}");
         }
 
-        public List<GoogleBook> SearchByTitle(string title)
+        public async Task<List<GoogleBook>> SearchByTitleAsync(string title)
         {
-            return SearchBooksBase($"intitle:{title}");
+            return await SearchBooksAsync($"intitle:{title}");
         }
 
-        private List<GoogleBook> SearchBooksBase(string query)
+        public async Task<List<GoogleBook>> SearchGeneralAsync(string words)
+        {
+            return await SearchBooksAsync(words);
+        }
+
+        private async Task<List<GoogleBook>> SearchBooksAsync(string query)
         {
             var     request = _booksService.Volumes.List(query);
-            Volumes volumes = request.Execute();
+            Volumes volumes = await request.ExecuteAsync();
             return ParseBookResponse(volumes.Items).ToList();
 
 
@@ -154,6 +158,7 @@ namespace Kiki.Identification
                     bool parsedPublishDate = DateTime.TryParse(volume.VolumeInfo.PublishedDate, out DateTime published);
                     GoogleBook book = new GoogleBook
                                       {
+                                          GoogleBooksID = volume.Id,
                                           Title         = volume.VolumeInfo.Title,
                                           Authors       = volume.VolumeInfo.Authors as List<string>,
                                           Description   = volume.VolumeInfo.Description,
@@ -170,6 +175,30 @@ namespace Kiki.Identification
                     yield return book;
                 }
             }
+        }
+
+        public async Task<GoogleBook> GetGoogleBookAsync(string googleBookId)
+        {
+            var getRequest = _booksService.Volumes.Get(googleBookId);
+            Volume volume = await getRequest.ExecuteAsync();
+            bool parsedPublishDate = DateTime.TryParse(volume.VolumeInfo.PublishedDate, out DateTime published);
+            GoogleBook book = new GoogleBook
+                              {
+                                  GoogleBooksID = volume.Id,
+                                  Title         = volume.VolumeInfo.Title,
+                                  Authors       = volume.VolumeInfo.Authors as List<string>,
+                                  Description   = volume.VolumeInfo.Description,
+                                  ThumbnailLink = volume.VolumeInfo?.ImageLinks?.Thumbnail,
+                                  Language      = volume.VolumeInfo.Language,
+                                  Publisher     = volume.VolumeInfo.Publisher,
+                                  Published     = parsedPublishDate ? published : (DateTime?) null,
+                                  Category      = volume.VolumeInfo.MainCategory,
+                                  IndustryIdentifiers =
+                                      volume?.VolumeInfo?.IndustryIdentifiers
+                                            ?.Select(i => new IndustryIdentifier(i.Type, i.Identifier))
+                                            ?.ToList() ?? new List<IndustryIdentifier>()
+                              };
+            return book;
         }
     }
 }
