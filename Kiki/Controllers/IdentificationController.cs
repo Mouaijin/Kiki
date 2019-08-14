@@ -58,7 +58,7 @@ namespace Kiki.Controllers {
             catch (Exception ex)
             {
                 _logger
-                    .LogError($"Error fetching books query: ({type}){query}");
+                    .LogError($"Error fetching books query: ({type}){query}: {ex.Message}");
                 return StatusCode((int) HttpStatusCode
                                       .InternalServerError);
             }

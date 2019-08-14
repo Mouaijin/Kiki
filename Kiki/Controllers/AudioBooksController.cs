@@ -42,7 +42,7 @@ namespace Kiki.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                _logger.LogError($"Tried to list audiobooks, but received null list. Count {count}, offset {offset}");
+                _logger.LogError($"Tried to list audiobooks, but received null list. Count {count}, offset {offset}: {ex.Message}");
                 return BadRequest();
             }
         }

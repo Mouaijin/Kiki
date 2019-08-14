@@ -21,19 +21,7 @@ namespace Kiki.Identification
             //todo: more friendly way of storing//accessing API key. 
             //!: no error handling or logging, no graceful exiting
             string apiKey = new SystemServiceCredentialsDev().GoogleBooksApiKey;
-//            try
-//            {
-//                apiKey = File.ReadAllText(
-//                                          Path.Combine(
-//                                                       AppDomain.CurrentDomain.BaseDirectory, "Properties", "BooksApiKey.txt"
-//                                                      )
-//                                         )
-//                    ;
-//            }
-//            catch (FileNotFoundException ex)
-//            {
-//                
-//            }
+
 
             _booksService = new BooksService(new BaseClientService.Initializer
                                              {

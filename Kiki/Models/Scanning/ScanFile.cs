@@ -21,7 +21,7 @@ namespace Kiki.Models.Scanning
         }
 
         ///Full path of file
-        public string FullPath { get; set; }
+        public string FullPath { get; }
 
         /// <summary>
         /// Name of file, without extension
@@ -79,7 +79,7 @@ namespace Kiki.Models.Scanning
                     _tags = null;
                 }
             }
-            catch (UnsupportedFormatException ex)
+            catch (UnsupportedFormatException)
             {
                 _tags = null;
             }
@@ -101,6 +101,11 @@ namespace Kiki.Models.Scanning
             }
 
             return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return FullPath.GetHashCode();
         }
     }
 }
