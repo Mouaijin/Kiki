@@ -38,6 +38,12 @@ namespace Kiki.Models.Scanning
         /// </summary>
         public string ParentDirectory { get; set; }
 
+        /// <summary>
+        /// Content-Type of the file
+        /// Populated by scanning tags
+        /// </summary>
+        public string MimeType { get; set; }
+
         public bool IsAudioFile
         {
             get
@@ -69,6 +75,10 @@ namespace Kiki.Models.Scanning
             try
             {
                 var tagFile = TagLib.File.Create(FullPath);
+                if (tagFile != null)
+                {
+                    MimeType = tagFile.MimeType;
+                }
                 if (!tagFile.Tag.IsEmpty)
                 {
                     _isAudio = tagFile.Properties.MediaTypes == MediaTypes.Audio;

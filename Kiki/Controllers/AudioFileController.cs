@@ -52,5 +52,20 @@ namespace Kiki.Controllers
             _logger.LogInformation($"Retrieved audio file progress with ID {id.ToString()}");
             return progress;
         }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult<AudioFileProgress>> Progress([FromQuery] Guid id, [FromQuery] int ticks)
+        {
+            AudioFileProgress progress =
+                await _context.FileProgresses.SingleOrDefaultAsync(x => x.Id == id && x.UserId == User.GetUserId());
+            if (progress == null)
+            {
+                _context.FileProgresses.Add(new AudioFileProgress()
+                                            {
+                                                //todo
+                                            })
+            }
+        }
     }
 }

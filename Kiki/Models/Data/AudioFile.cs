@@ -33,6 +33,9 @@ namespace Kiki.Models.Data
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public string MimeType { get; set; }
+
         public AudioFile() { }
 
         public AudioFile(ScanFile file)
@@ -43,6 +46,7 @@ namespace Kiki.Models.Data
             Name = file.Tags?.Title ?? file.FileName;
             TrackNumber   = file.Tags?.Track ?? 1;
             AudioTags = file.Tags;
+            MimeType = file.MimeType;
         }
     }
 }

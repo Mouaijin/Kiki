@@ -27,6 +27,6 @@ namespace Kiki.Models.Data
         public bool IsFinished { get; set; }
 
         [Required]
-        public DateTime Progress { get; set; }
+        public TimeSpan Progress { get; set; }
     }
 }
