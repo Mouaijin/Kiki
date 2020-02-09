@@ -130,6 +130,7 @@ namespace Kiki.Controllers
                 Id = id;
                 Email = email;
                 JWT = jwt;
+                
             }
         }
         public class LoginDto
