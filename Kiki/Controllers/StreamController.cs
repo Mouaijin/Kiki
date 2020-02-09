@@ -25,12 +25,13 @@ namespace Kiki.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<FileStreamResult> File([FromQuery] Guid audioFileId)
+        [Route("api/stream/file")]
+        public async Task<FileStreamResult> File([FromQuery] Guid id)
         {
-            AudioFile file = await _context.AudioFiles.SingleOrDefaultAsync(x => x.Id == audioFileId);
+            AudioFile file = await _context.AudioFiles.SingleOrDefaultAsync(x => x.Id == id);
             if (file == null)
             {
-                _logger.LogDebug($"Missed audio file lookup for {audioFileId.ToString()} in /stream/file");
+                _logger.LogDebug($"Missed audio file lookup for {id.ToString()} in /stream/file");
                 return null;
             }
 
@@ -43,7 +44,7 @@ namespace Kiki.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Could not open file for reading: {audioFileId.ToString()} - {file.Path}");
+                _logger.LogError($"Could not open file for reading: {id.ToString()} - {file.Path}");
                 return null;
             }
         }

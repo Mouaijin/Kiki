@@ -38,6 +38,7 @@ namespace Kiki.Controllers {
         /// <returns>List of possible matches from Google Books API</returns>
         [Authorize]
         [HttpGet]
+        [Route("api/id/search")]
         public async Task<ActionResult<List<GoogleBook>>> Search([FromQuery] string type  = "",
                                                                  [FromQuery] string query = "")
         {
@@ -71,6 +72,7 @@ namespace Kiki.Controllers {
         /// <returns>Http status code</returns>
         [Authorize]
         [HttpPost]
+        [Route("api/id/confirm")]
         public async Task<ActionResult> Confirm([FromBody] BookInfoConfirmationModel model)
         {
             try

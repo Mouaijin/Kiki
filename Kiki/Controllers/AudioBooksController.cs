@@ -27,6 +27,7 @@ namespace Kiki.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/book/list")]
         public async Task<ActionResult<List<AudioBook>>> List([FromQuery] int count = 25, [FromQuery] int offset = 0)
         {
             try
@@ -49,6 +50,7 @@ namespace Kiki.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/book/get")]
         public async Task<ActionResult<AudioBook>> Get([FromQuery] Guid id)
         {
             AudioBook audioBook = await _context.AudioBooks.SingleOrDefaultAsync(x => x.Id == id);
@@ -65,6 +67,7 @@ namespace Kiki.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/book/files")]
         public async Task<ActionResult<List<AudioFile>>> Files([FromQuery] Guid id)
         {
             AudioBook audioBook = await _context.AudioBooks.SingleOrDefaultAsync(x => x.Id == id);
@@ -82,6 +85,7 @@ namespace Kiki.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/book/progress")]
         public async Task<ActionResult<AudioBookProgress>> Progress([FromQuery] Guid id)
         {
             AudioBookProgress progress =

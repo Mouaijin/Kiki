@@ -28,6 +28,7 @@ namespace Kiki.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/scan/update")]
         public async Task<ActionResult> Update()
         {
             DirectoryScanner directoryScanner = new DirectoryScanner();

@@ -16,8 +16,6 @@ namespace Kiki.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<KikiUser>(b => b.Property(u => u.Id).HasDefaultValueSql("newsequentialid()"));
-            modelBuilder.Entity<KikiRole>(b => b.Property(u => u.Id).HasDefaultValueSql("newsequentialid()"));
             modelBuilder.Entity<BookAuthor>().HasKey(a => new {a.AuthorId, a.BookId});
             modelBuilder.Entity<SeriesAuthor>().HasKey(a => new {a.AuthorId, a.SeriesId});
             modelBuilder.Entity<AudioFile>().HasKey(a => new {a.AudioBookId, a.TrackNumber});

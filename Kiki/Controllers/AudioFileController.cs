@@ -28,6 +28,7 @@ namespace Kiki.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/file/get")]
         public async Task<ActionResult<AudioFile>> Get([FromQuery] Guid id)
         {
             AudioFile file = await _context.AudioFiles.SingleOrDefaultAsync(x => x.Id == id);
@@ -43,6 +44,7 @@ namespace Kiki.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/file/progress")]
         public async Task<ActionResult<AudioFileProgress>> Progress([FromQuery] Guid id)
         {
             AudioFileProgress progress =
@@ -59,6 +61,7 @@ namespace Kiki.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/file/progress")]
         public async Task<ActionResult<AudioFileProgress>> Progress([FromBody] AudioFileProgressUpdateRequest request)
         {
             if (request.ProgressID.HasValue)

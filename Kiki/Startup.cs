@@ -47,6 +47,7 @@ namespace Kiki
                                                          i.Password.RequireLowercase = false;
                                                          i.Password.RequireUppercase = false;
                                                          i.Password.RequiredUniqueChars = 1;
+                                                         i.Password.RequireNonAlphanumeric = false;
                                                      })
                     .AddEntityFrameworkStores<KikiContext>()
                     .AddDefaultTokenProviders()
@@ -111,6 +112,7 @@ namespace Kiki
 
             // ===== Create tables ======
             dbContext.Database.EnsureCreated();
+      
         }
     }
 }
