@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kiki", "Kiki\Kiki.csproj", "{60555B0D-9325-475B-B1D3-43795BA27956}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KikiTest", "KikiTest\KikiTest.csproj", "{B15D5EB0-7868-4A60-B3B0-CD5B70344B04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KikiExploration", "KikiExploration\KikiExploration.csproj", "{E192016B-EDA6-4993-92F0-B577876C6429}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kiki", "Kiki\Kiki.csproj", "{32DE1AFC-10B5-4EE0-BC7E-33F60CE3B67F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,17 +10,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{60555B0D-9325-475B-B1D3-43795BA27956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60555B0D-9325-475B-B1D3-43795BA27956}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60555B0D-9325-475B-B1D3-43795BA27956}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60555B0D-9325-475B-B1D3-43795BA27956}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B15D5EB0-7868-4A60-B3B0-CD5B70344B04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B15D5EB0-7868-4A60-B3B0-CD5B70344B04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B15D5EB0-7868-4A60-B3B0-CD5B70344B04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B15D5EB0-7868-4A60-B3B0-CD5B70344B04}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E192016B-EDA6-4993-92F0-B577876C6429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E192016B-EDA6-4993-92F0-B577876C6429}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E192016B-EDA6-4993-92F0-B577876C6429}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E192016B-EDA6-4993-92F0-B577876C6429}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32DE1AFC-10B5-4EE0-BC7E-33F60CE3B67F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32DE1AFC-10B5-4EE0-BC7E-33F60CE3B67F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32DE1AFC-10B5-4EE0-BC7E-33F60CE3B67F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32DE1AFC-10B5-4EE0-BC7E-33F60CE3B67F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

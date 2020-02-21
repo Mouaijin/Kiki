@@ -13,7 +13,6 @@ using Microsoft.Extensions.Logging;
 namespace Kiki.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
     public class AudioBooksController : ControllerBase
     {
         private readonly KikiContext                   _context;
