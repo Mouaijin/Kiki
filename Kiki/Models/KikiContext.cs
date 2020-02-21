@@ -13,6 +13,13 @@ namespace Kiki.Models
     {
         public KikiContext(DbContextOptions<KikiContext> options) : base(options) { }
 
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlite("Data Source =kiki.db");
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

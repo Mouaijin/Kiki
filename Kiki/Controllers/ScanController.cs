@@ -14,7 +14,6 @@ using Microsoft.Extensions.Logging;
 namespace Kiki.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
     public class ScanController : ControllerBase
     {
         private readonly KikiContext             _context;

@@ -1,9 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
 
         <IsPackable>false</IsPackable>
+
+        <LangVersion>8</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,11 +15,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Kiki\Kiki.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Remove="TestBooks\The A Frequency\The A Frequency 2.mp3" />
+      <Content Include="Properties\BooksApiKey.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <Content Include="TestBooks\The A Frequency\The A Frequency 2.mp3">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
@@ -38,13 +39,14 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="Properties\BooksApiKey.txt" />
-      <Content Include="Properties\BooksApiKey.txt">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="TestBooks\EmptyFolder" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Kiki2.1\Kiki2.1.csproj" />
     </ItemGroup>
 
 </Project>

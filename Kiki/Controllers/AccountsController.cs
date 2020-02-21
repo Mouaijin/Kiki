@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Kiki.Controllers
 {
+    [ApiController]
     public class AccountsController : ControllerBase
     {
         private readonly KikiContext _dbContext;
